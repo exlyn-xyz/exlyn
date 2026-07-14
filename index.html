@@ -286,70 +286,27 @@
   </div>
 
   <!-- ============ AVIATOR ============ -->
-  <div class="screen" id="screen-aviator" style="display: none; width: 100%; max-width: 800px; margin: 0 auto;">
-  
-  <div class="topRow" style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #0e131b; border-bottom: 1px solid #1f2d42;">
-    <button class="homeBtn" onclick="goHome()" style="background:#1f2d42; border:none; color:#fff; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:bold; font-size:13px; transition: 0.2s;">
-      ← Back to Lobby
-    </button>
-    
-    <div style="display: flex; gap: 15px; align-items: center;">
-      <span id="recoveryStatus" style="font-size: 11px; color: #617b9b; font-family: monospace; background: #0b0f16; padding: 4px 8px; border-radius: 4px;">Recovery: 0/2</span>
-      <div class="balanceDisplay" style="color: #00ff66; font-weight: bold; font-family: sans-serif; font-size: 1.1rem;">
-        Balance: <span id="userBalance">300.00</span> ৳
+  <div class="screen" id="screen-aviator">
+    <div class="homeBtnRow"><button class="homeBtn" onclick="goHome()">← Home</button></div>
+    <div style="background:var(--panel);border-radius:10px;overflow:hidden;">
+      <div class="history" id="history"></div>
+      <div class="canvasWrap">
+        <canvas id="cv"></canvas>
+        <div class="liveBadge"><div class="dot"></div> Probably Fair ● BettingHub</div>
+        <div class="roundBadge" id="roundBadge">Game ID #920471</div>
+        <div class="flash" id="flash"></div>
+        <div class="status" id="status">Waiting for next Round</div>
+        <div class="multOverlay" id="multOverlay">
+          <div class="num" id="multNum">1.00x</div>
+          <div class="sub" id="multSub">Flew Away !</div>
+        </div>
+      </div>
+      <div class="betpanels">
+        <div class="panel" id="panel0"></div>
+        <div class="panel" id="panel1"></div>
       </div>
     </div>
-  </div>
-
-  <div style="background:#151d2a; border-radius: 0 0 10px 10px; overflow:hidden; font-family: sans-serif; border: 1px solid #2a3c54; border-top: none;">
-    
-    <div class="history" id="history" style="display: flex; gap: 6px; padding: 10px; background: #0b0f16; overflow-x: auto; min-height: 32px; align-items: center;"></div>
-    
-    <div class="canvasWrap" style="position: relative; height: 320px; background: #0b0f16;">
-      <canvas id="cv" style="width: 100%; height: 100%; display: block;"></canvas>
-      <div class="liveBadge" style="position: absolute; top: 12px; left: 15px; color: #4b6382; font-size: 11px; font-weight: bold; letter-spacing: 0.5px;">
-        PROVABLY FAIR ● AVIATOR
-      </div>
-      <div class="roundBadge" id="roundBadge" style="position: absolute; top: 12px; right: 15px; color: #4b6382; font-size: 11px; font-family: monospace;">
-        ROUND #390271
-      </div>
-      <div class="flash" id="flash" style="position: absolute; inset:0; background:#ff3b4e; opacity:0; pointer-events:none; transition: opacity 0.3s;"></div>
-      <div class="status" id="status" style="position: absolute; bottom: 20px; width:100%; text-align:center; color:#617b9b; font-weight:bold; font-size: 13px; letter-spacing: 1px;">
-        WAITING FOR NEXT ROUND...
-      </div>
-      
-      <div class="multOverlay" id="multOverlay" style="position: absolute; top:42%; left:50%; transform:translate(-50%,-50%); text-align:center; user-select: none;">
-        <div class="num" id="multNum" style="font-size: 3.8rem; font-weight:900; color:#fff; transition: transform 0.1s;">1.00x</div>
-        <div class="sub" id="multSub" style="color:#ff3b4e; font-weight:bold; display:none; font-size: 1.2rem; letter-spacing: 3px; margin-top: -5px;">FLEW AWAY</div>
-      </div>
-    </div>
-    
-    <div class="betpanels" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; background: #0e131b;">
-      <div class="panel" id="panel0"></div>
-      <div class="panel" id="panel1"></div>
-    </div>
-  </div>
-</div>
-
-<style>
-  .crashedState #multSub { display: block; }
-  .crashed { color: #ff3b4e !important; text-shadow: 0 0 20px rgba(255, 59, 78, 0.7); transform: scale(0.95); }
-  .hchip { padding: 4px 10px; border-radius: 12px; font-weight: bold; display: inline-block; font-size: 11px; font-family: monospace;}
-  .c-low { background: rgba(255,59,78,0.15); color: #ff3b4e; border: 1px solid rgba(255,59,78,0.3); }
-  .c-mid { background: rgba(30,144,255,0.15); color: #1e90ff; border: 1px solid rgba(30,144,255,0.3); }
-  .c-high { background: rgba(255,215,0,0.15); color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
-  .panel { background: #151d2a; padding: 14px; border-radius: 8px; border: 1px solid #1f2d42; display: flex; flex-direction: column; gap: 8px; }
-  .betBtn { width: 100%; background: #2cba42; border: none; color: #fff; padding: 12px; font-weight: bold; font-size: 1.1rem; border-radius: 6px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 0 #1e7e2c; transition: all 0.1s; }
-  .betBtn:active { transform: translateY(2px); box-shadow: 0 2px 0 #1e7e2c; }
-  .betBtn.cancel { background: #d4af37; color: #000; box-shadow: 0 4px 0 #a38523; }
-  .betBtn.cancel:active { box-shadow: 0 2px 0 #a38523; }
-  .betBtn.cashout { background: #ff3b4e; color: #fff; box-shadow: 0 4px 0 #b82534; }
-  .betBtn.cashout:active { box-shadow: 0 2px 0 #b82534; }
-  .betBtn small { display: block; font-size: 0.75rem; margin-top: 2px; opacity: 0.9; font-family: monospace; }
-  .betBtn:disabled { background: #1c2635 !important; color: #4b6382 !important; cursor: not-allowed; box-shadow: none !important; transform: none !important; }
-  .homeBtn:hover { background: #2a3c54; }
-</style>
-
+   </div>
   <!-- ============ WHEEL ============ -->
   <div class="screen" id="screen-wheel">
     <div class="homeBtnRow"><button class="homeBtn" onclick="goHome()">← Home</button></div>
@@ -1622,182 +1579,36 @@ function playLoseSound(){ playTone(140,0.35,'sawtooth',0.12); }
 function playClickSound(){ playTone(300,0.05,'square',0.05); }
 
 /* ================================= AVIATOR ================================= */
-// ============ 🚀 EXISTENTIAL VARIABLES (আগের ভেরিয়েবলসমূহ) ============
-let balance = 300.00; 
-const MIN_BET = 20;
-
-// নতুন সাইকোলজিক্যাল স্টেট ট্র্যাকার
-let recoveryCount = 0; 
-const MAX_RECOVERIES = 2; 
-
-const GAME = { state: 'waiting', mult: 1, startTime: 0, crashPoint: 1 };
+const GAME = { state:'waiting', mult:1, startTime:0, crashPoint:1 };
 const history = [];
 const cv = document.getElementById('cv');
 const ctx = cv.getContext('2d');
-
-const avSlots = [
-  { amount:20.00, placed:false, cashedOut:false, cashoutAt:null, auto:false, autoTarget:2.00 }, 
-  { amount:20.00, placed:false, cashedOut:false, cashoutAt:null, auto:false, autoTarget:2.00 }
-];
-
-// ============ 🧭 SCREEN ROUTING SYSTEM (মাল্টি-স্ক্রিন ফিক্স) ============
-
-// ১. গেম লবি থেকে যখন প্লেয়ার এভিয়েটরে ক্লিক করবে তখন এই ফাংশনটি কল করবেন
-function openAviator() {
-  // আপনার লবি স্ক্রিনের ID যদি 'screen-lobby' হয়ে থাকে তবে সেটি হাইড হবে
-  const lobby = document.getElementById('screen-lobby');
-  if(lobby) lobby.style.display = 'none';
-  
-  // এভিয়েটর স্ক্রিন ওপেন হবে
-  document.getElementById('screen-aviator').style.display = 'block';
-  
-  // ক্যানভাস সাইজ রিসেট এবং গেম ইঞ্জিন রেন্ডার
-  setTimeout(() => {
-    resizeCanvas();
-  }, 50);
-}
-
-// ২. এভিয়েটরের "Back to Lobby" বাটনে ক্লিক করলে লবিতে ফিরে যাওয়ার ফাংশন
-function goHome() {
-  // এভিয়েটর হাইড হবে
-  document.getElementById('screen-aviator').style.display = 'none';
-  
-  // মেইন লবি বা গেম লিস্ট স্ক্রিন আবার দৃশ্যমান হবে
-  const lobby = document.getElementById('screen-lobby');
-  if(lobby) lobby.style.display = 'block';
-}
-
-// ক্যানভাস রিসাইজ হ্যান্ডলার
-function resizeCanvas(){ 
-  const wrap = cv.parentElement; if(!wrap || !wrap.clientWidth) return; 
-  cv.width = wrap.clientWidth * devicePixelRatio; cv.height = wrap.clientHeight * devicePixelRatio; 
-  cv.style.width = wrap.clientWidth + 'px'; cv.style.height = wrap.clientHeight + 'px'; 
-  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); drawCurve(GAME.mult); 
-}
+function resizeCanvas(){ const wrap=cv.parentElement; if(!wrap.clientWidth) return; cv.width=wrap.clientWidth*devicePixelRatio; cv.height=wrap.clientHeight*devicePixelRatio; cv.style.width=wrap.clientWidth+'px'; cv.style.height=wrap.clientHeight+'px'; ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); drawCurve(GAME.mult); }
 window.addEventListener('resize', resizeCanvas);
-
-
-// ============ 🧠 ADVANCED PSYCHOLOGICAL CRASH ENGINE ============
-function makeCrashPoint() {
-  const r = Math.random();
-  const activeBets = avSlots.filter(s => s.placed);
-  const maxBetAmount = activeBets.length > 0 ? Math.max(...activeBets.map(s => s.amount)) : 0;
-
-  // কন্ডিশন: ব্যালেন্স ১০০ টাকার নিচে নেমে গেলে এবং বেট একটিভ থাকলে ট্র্যাপ সক্রিয় হবে
-  if (balance < 100 && activeBets.length > 0) {
-    
-    // [ধাপ ১] ১ম এবং ২য় বার প্লেয়ারকে বাঁচিয়ে ৫০০-৬০০ টাকার কাছে নিয়ে যাওয়া
-    if (recoveryCount < MAX_RECOVERIES) {
-      recoveryCount++; 
-      updateRecoveryStatusUI();
-      
-      // ব্যালেন্স ৫০০-৬০০ এর ঘরে নিতে প্রয়োজনীয় মাল্টিপ্লায়ার হিসাব
-      let targetWinMultiplier = (550 / maxBetAmount);
-      let calculatedMult = targetWinMultiplier + (Math.random() * 4.00);
-      
-      // সেফটি বাউন্ডারি: নিশ্চিত করা হলো মাল্টিপ্লায়ার যেন ১৫x থেকে ৩০x এর মধ্যে থাকে
-      let finalRecoveryMult = Math.max(15.00, Math.min(calculatedMult, 30.00));
-      return Math.floor(finalRecoveryMult * 100) / 100;
-    } 
-    
-    // [ধাপ ২] ৩য় বার ব্যালেন্স ১০০ এর নিচে নামলে "ইনস্ট্যান্ট কিল মোড" (জিরো ব্যালেন্স ট্র্যাপ)
-    else {
-      // ১.০০x থেকে ১.০২x এর মধ্যে ক্র্যাশ। প্লেয়ার বাটন চাপার সময়ই পাবে না।
-      let killMult = 1.00 + (Math.random() * 0.02);
-      return Math.floor(killMult * 100) / 100;
-    }
-  }
-
-  // সাধারণ ৩% হাউস এজ মেকানিজম (ব্যালেন্স ১০০+ থাকলে এটি স্বাভাবিকভাবে চলবে)
-  if (r < 0.03) return 1.00;
-  let cp = 0.97 / (1 - Math.min(r, 0.9999));
-  return Math.max(1.00, Math.min(Math.floor(cp * 100) / 100, 500));
-}
-
-
-// ============ 🛠️ UI & GAME CONTROLLERS ============
-function updateRecoveryStatusUI() {
-  const el = document.getElementById('recoveryStatus');
-  if (el) el.textContent = `Recovery: ${recoveryCount}/${MAX_RECOVERIES}`;
-}
-
-function tierClass(m){ if(m < 2) return 'c-low'; if(m < 10) return 'c-mid'; return 'c-high'; }
-
-function pushHistory(m){ 
-  history.unshift(m); if(history.length > 18) history.pop(); 
-  const el = document.getElementById('history'); 
-  if(el) el.innerHTML = history.map(m => `<div class="hchip ${tierClass(m)}">${m.toFixed(2)}x</div>`).join(''); 
-}
-
-function updateBalanceUI() {
-  const el = document.getElementById('userBalance');
-  if(el) el.textContent = balance.toFixed(2);
-}
-
-function renderAvPanelStructure(i){ 
-  const s = avSlots[i]; const el = document.getElementById('panel' + i); if(!el) return; 
-  const flying = GAME.state === 'flying'; const betting = GAME.state === 'waiting'; let btnHTML; 
-  if (s.placed && flying && !s.cashedOut){ 
-    btnHTML = `<button class="betBtn cashout" id="cashBtn${i}" onclick="cashOut(${i})">CASH OUT<small id="potential${i}">${(s.amount*GAME.mult).toFixed(2)} ৳</small></button>`; 
-  } else if (s.placed && !flying){ 
-    btnHTML = `<button class="betBtn cancel" onclick="cancelBet(${i})">CANCEL<small>${s.amount.toFixed(2)} ৳</small></button>`; 
-  } else if (s.placed && flying && s.cashedOut){ 
-    btnHTML = `<button class="betBtn" disabled>CASHED ${s.cashoutAt.toFixed(2)}x<small>+${(s.amount*s.cashoutAt).toFixed(2)} ৳</small></button>`; 
-  } else if (!betting){ 
-    btnHTML = `<button class="betBtn cancel" disabled>NEXT ROUND<small>wait</small></button>`; 
-  } else { 
-    btnHTML = `<button class="betBtn" onclick="placeBet(${i})">BET<small>${s.amount.toFixed(2)} ৳</small></button>`; 
-  } 
-  el.innerHTML = `<div class="amtRow" style="display:flex; justify-content:center; gap:5px; margin-bottom:5px;"><button onclick="adjustAmt(${i},-1)" style="background:#1f2d42; border:none; color:#fff; width:30px; border-radius:4px; cursor:pointer;">−</button><input type="number" style="width:65px; text-align:center; background:#0b0f16; color:#fff; border:1px solid #1f2d42; border-radius:4px; font-weight:bold;" value="${s.amount.toFixed(0)}" onchange="setAmt(${i}, this.value)" ${s.placed?'disabled':''}><button onclick="adjustAmt(${i},1)" style="background:#1f2d42; border:none; color:#fff; width:30px; border-radius:4px; cursor:pointer;">+</button></div><div class="quickRow" style="display:flex; gap:3px; margin-bottom:5px;"><button onclick="setAmt(${i}, 20)" style="flex:1; background:#1c2635; border:none; color:#8a9eb5; padding:5px; font-size:11px; border-radius:3px; cursor:pointer;">20</button><button onclick="setAmt(${i}, 50)" style="flex:1; background:#1c2635; border:none; color:#8a9eb5; padding:5px; font-size:11px; border-radius:3px; cursor:pointer;">50</button><button onclick="setAmt(${i}, 100)" style="flex:1; background:#1c2635; border:none; color:#8a9eb5; padding:5px; font-size:11px; border-radius:3px; cursor:pointer;">100</button><button onclick="setAmt(${i}, 500)" style="flex:1; background:#1c2635; border:none; color:#8a9eb5; padding:5px; font-size:11px; border-radius:3px; cursor:pointer;">500</button></div>${btnHTML}`; 
-}
-
+const avSlots = [{ amount:20.00, placed:false, cashedOut:false, cashoutAt:null, auto:false, autoTarget:2.00 }, { amount:20.00, placed:false, cashedOut:false, cashoutAt:null, auto:false, autoTarget:2.00 }];
+function makeCrashPoint(){ const r=fairRandom(); if(r<0.09) return 1.00; let cp=0.91/(1-Math.min(r,0.9999)); return Math.max(1.00,Math.min(Math.floor(cp*100)/100,500)); }
+function tierClass(m){ if(m<2) return 'c-low'; if(m<10) return 'c-mid'; return 'c-high'; }
+function pushHistory(m){ history.unshift(m); if(history.length>25) history.pop(); const el=document.getElementById('history'); if(el) el.innerHTML=history.map(m=>`<div class="hchip ${tierClass(m)}">${m.toFixed(2)}x</div>`).join(''); }
+function renderAvPanelStructure(i){ const s=avSlots[i]; const el=document.getElementById('panel'+i); if(!el) return; const flying=GAME.state==='flying'; const betting=GAME.state==='waiting'; let btnHTML; if (s.placed && flying && !s.cashedOut){ btnHTML=`<button class="betBtn cashout" id="cashBtn${i}" onclick="cashOut(${i})">CASH OUT<small id="potential${i}">${(s.amount*GAME.mult).toFixed(2)} ৳</small></button>`; } else if (s.placed && !flying){ btnHTML=`<button class="betBtn cancel" onclick="cancelBet(${i})">CANCEL<small>${s.amount.toFixed(2)} ৳</small></button>`; } else if (s.placed && flying && s.cashedOut){ btnHTML=`<button class="betBtn" disabled>CASHED ${s.cashoutAt.toFixed(2)}x<small>+${(s.amount*s.cashoutAt).toFixed(2)} ৳</small></button>`; } else if (!betting){ btnHTML=`<button class="betBtn cancel" disabled>NEXT ROUND<small>wait for betting phase</small></button>`; } else { btnHTML=`<button class="betBtn" onclick="placeBet(${i})">BET<small>${s.amount.toFixed(2)} ৳</small></button>`; } el.innerHTML=`<div class="amtRow"><button onclick="adjustAmt(${i},-1)">−</button><input type="number" step="1" min="20" value="${s.amount.toFixed(2)}" onchange="setAmt(${i}, this.value)" ${s.placed?'disabled':''}><button onclick="adjustAmt(${i},1)">+</button></div><input type="range" min="20" max="500" step="1" value="${s.amount}" oninput="setAmt(${i}, this.value)" ${s.placed?'disabled':''}><div class="quickRow"><button onclick="setAmt(${i}, 20)">20</button><button onclick="setAmt(${i}, 50)">50</button><button onclick="setAmt(${i}, 100)">100</button><button onclick="setAmt(${i}, 500)">500</button></div>${btnHTML}<div class="autoRow"><label><div class="switch ${s.auto?'on':''}" onclick="toggleAuto(${i})"><div class="knob"></div></div> Auto cash out at</label><input class="autoAmt" type="number" step="0.1" min="1.01" value="${s.autoTarget.toFixed(2)}" onchange="setAutoTarget(${i}, this.value)"></div>`; }
 function renderAvPanels(){ for(let i=0;i<2;i++) renderAvPanelStructure(i); }
-function updateAvPanelValue(i){ const s = avSlots[i]; if(!(s.placed && GAME.state==='flying' && !s.cashedOut)) return; const el = document.getElementById('potential'+i); if(el) el.textContent=(s.amount*GAME.mult).toFixed(2)+' ৳'; }
-function adjustAmt(i,dir){ if(avSlots[i].placed) return; avSlots[i].amount=Math.max(MIN_BET, avSlots[i].amount+(dir*20)); renderAvPanelStructure(i); }
-function setAmt(i,v){ if(avSlots[i].placed) return; avSlots[i].amount=Math.max(MIN_BET, parseFloat(v)||MIN_BET); renderAvPanelStructure(i); }
-
-function placeBet(i){ 
-  const s = avSlots[i]; if(s.placed || GAME.state!=='waiting') return; 
-  if(balance < s.amount) { alert("Balance too low!"); return; }
-  balance -= s.amount; updateBalanceUI();
-  s.placed=true; s.cashedOut=false; s.cashoutAt=null; renderAvPanelStructure(i); 
-}
-function cancelBet(i){ const s = avSlots[i]; if(!s.placed || GAME.state!=='waiting') return; balance += s.amount; updateBalanceUI(); s.placed=false; renderAvPanelStructure(i); }
-
-function cashOut(i){ 
-  const s = avSlots[i]; if(!s.placed || s.cashedOut || GAME.state!=='flying') return; 
-  s.cashedOut=true; s.cashoutAt=GAME.mult; 
-  const payout=s.amount*GAME.mult; 
-  balance += payout; updateBalanceUI(); 
-  renderAvPanelStructure(i); 
-}
-
-// ============ 🕒 GAME LOOP TIMERS ============
-const BETTING_MS = 5000, CRASHED_MS = 2500;
-function startWaiting(){ 
-  GAME.state='waiting'; GAME.mult=1; const ov=document.getElementById('multOverlay'); const num=document.getElementById('multNum'); if(ov) ov.classList.remove('crashedState'); if(num){ num.classList.remove('crashed'); num.textContent='1.00x'; } const st=document.getElementById('status'); if(st) st.textContent='NEXT ROUND STARTING…'; renderAvPanels(); drawCurve(1); let remaining=BETTING_MS; 
-  const bar=setInterval(()=>{ remaining-=100; const s=document.getElementById('status'); if(s) s.textContent=`NEXT ROUND IN ${Math.max(0,remaining/1000).toFixed(1)}s`; if(remaining<=0){ clearInterval(bar); startFlying(); } },100); 
-}
-
-function startFlying(){ GAME.state='flying'; GAME.crashPoint=makeCrashPoint(); GAME.startTime=performance.now(); const st=document.getElementById('status'); if(st) st.textContent=''; renderAvPanels(); requestAnimationFrame(tick); }
-function growth(t){ return Math.pow(Math.E, 0.15 * t); }
-
-function tick(now){ 
-  if(GAME.state!=='flying') return; const t=(now-GAME.startTime)/1000; GAME.mult=Math.max(1,growth(t)); 
-  if(GAME.mult>=GAME.crashPoint){ GAME.mult=GAME.crashPoint; drawCurve(GAME.mult); const num=document.getElementById('multNum'); if(num) num.textContent=GAME.mult.toFixed(2)+'x'; doCrash(); return; } 
-  avSlots.forEach((s,i)=>{ updateAvPanelValue(i); }); const num=document.getElementById('multNum'); if(num) num.textContent=GAME.mult.toFixed(2)+'x'; drawCurve(GAME.mult); requestAnimationFrame(tick); 
-}
-
-function doCrash(){ 
-  GAME.state='crashed'; pushHistory(GAME.crashPoint); const ov=document.getElementById('multOverlay'); const num=document.getElementById('multNum'); if(ov) ov.classList.add('crashedState'); if(num) num.classList.add('crashed'); const st=document.getElementById('status'); if(st) st.textContent='FLEW AWAY'; 
-  setTimeout(()=>{ avSlots.forEach(s=>{ s.placed=false; s.cashedOut=false; s.cashoutAt=null; }); startWaiting(); }, CRASHED_MS); 
-}
-
-// ক্যানভাস গ্রাফ ড্রয়িং ইঞ্জিন
-function drawCurve(mult){ if(!cv.clientWidth) return; const w=cv.clientWidth, h=cv.clientHeight; if(!w||!h) return; ctx.clearRect(0,0,w,h); ctx.save(); ctx.globalAlpha=0.06; ctx.strokeStyle='#fff'; const cx=w*0.08, cy=h*0.95; for(let a=0;a<10;a++){ ctx.beginPath(); ctx.moveTo(cx,cy); const ang=-Math.PI/2+(a-4.5)*0.12; ctx.lineTo(cx+Math.cos(ang)*Math.max(w,h)*1.4, cy+Math.sin(ang)*Math.max(w,h)*1.4); ctx.stroke(); } ctx.restore(); const padL=w*0.06,padB=h*0.08,padT=h*0.10,padR=w*0.06; const plotW=w-padL-padR, plotH=h-padT-padB; const maxT=Math.log(Math.max(mult,1.01))/0.15; const viewT=Math.max(maxT*1.05,1); const viewMult=Math.max(mult*1.15,2); function pt(t){ const m=growth(t); const x=padL+(t/viewT)*plotW; const y=h-padB-(Math.min(m,viewMult)-1)/(viewMult-1)*plotH; return [x,y]; } ctx.beginPath(); const steps=60; ctx.moveTo(padL,h-padB); let lastX=padL,lastY=h-padB; for(let i=0;i<=steps;i++){ const t=(i/steps)*maxT; const [x,y]=pt(t); ctx.lineTo(x,y); lastX=x; lastY=y; } ctx.lineTo(lastX,h-padB); ctx.closePath(); const grad=ctx.createLinearGradient(0,padT,0,h-padB); grad.addColorStop(0,'rgba(230,57,70,0.85)'); grad.addColorStop(1,'rgba(230,57,70,0.05)'); ctx.fillStyle=grad; ctx.fill(); ctx.beginPath(); ctx.moveTo(padL,h-padB); for(let i=0;i<=steps;i++){ const t=(i/steps)*maxT; const [x,y]=pt(t); ctx.lineTo(x,y); } ctx.strokeStyle='#ff3b4e'; ctx.lineWidth=3; ctx.stroke(); ctx.save(); ctx.translate(lastX,lastY); const dt=0.001; const [px,py]=pt(Math.max(0,maxT-dt)); const angle=Math.atan2(lastY-py,lastX-px); ctx.rotate(angle); ctx.font='22px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('🚀', 0, 0); ctx.restore(); }
-
-// 初始化 (Initialize গেম রান অন লোড)
-updateBalanceUI(); renderAvPanels(); startWaiting(); updateRecoveryStatusUI();
+function updateAvPanelValue(i){ const s=avSlots[i]; if(!(s.placed && GAME.state==='flying' && !s.cashedOut)) return; const el=document.getElementById('potential'+i); if(el) el.textContent=(s.amount*GAME.mult).toFixed(2)+' ৳'; }
+function adjustAmt(i,dir){ if(avSlots[i].placed) return; avSlots[i].amount=Math.max(MIN_BET,+(avSlots[i].amount+dir*(avSlots[i].amount>=100?50:20)).toFixed(2)); renderAvPanelStructure(i); }
+function setAmt(i,v){ if(avSlots[i].placed) return; avSlots[i].amount=Math.max(MIN_BET, +(parseFloat(v)||MIN_BET).toFixed(2)); renderAvPanelStructure(i); }
+function setAutoTarget(i,v){ avSlots[i].autoTarget=Math.max(1.01,+(parseFloat(v)||1.01).toFixed(2)); }
+function toggleAuto(i){ avSlots[i].auto=!avSlots[i].auto; renderAvPanelStructure(i); }
+function placeBet(i){ const s=avSlots[i]; if(s.placed || GAME.state!=='waiting') return; if(!spendBalance(s.amount)){ flashMessage(MIN_BET_MESSAGE); return; } s.placed=true; s.cashedOut=false; s.cashoutAt=null; playClickSound(); renderAvPanelStructure(i); }
+function cancelBet(i){ const s=avSlots[i]; if(!s.placed || GAME.state!=='waiting') return; addBalance(s.amount); s.placed=false; renderAvPanelStructure(i); }
+function cashOut(i){ const s=avSlots[i]; if(!s.placed || s.cashedOut || GAME.state!=='flying') return; s.cashedOut=true; s.cashoutAt=GAME.mult; const payout=s.amount*GAME.mult; addBalance(payout); recordWin(payout); if(isAviatorActive()) playCashoutSound(); renderAvPanelStructure(i); }
+function flashMessage(msg){ const st=document.getElementById('status'); if(!st) return; st.textContent=msg; setTimeout(()=>{ if(GAME.state) updateStatusText(); },1200); }
+function updateStatusText(){ const st=document.getElementById('status'); if(!st) return; st.textContent = GAME.state==='waiting' ? 'NEXT ROUND STARTING…' : ''; }
+const BETTING_MS=5000, CRASHED_MS=2500;
+function startWaiting(){ GAME.state='waiting'; GAME.mult=1; const ov=document.getElementById('multOverlay'); const num=document.getElementById('multNum'); if(ov) ov.classList.remove('crashedState'); if(num){ num.classList.remove('crashed'); num.textContent='1.00x'; } const st=document.getElementById('status'); if(st) st.textContent='NEXT ROUND STARTING…'; renderAvPanels(); drawCurve(1); let remaining=BETTING_MS; const bar=setInterval(()=>{ remaining-=100; const s=document.getElementById('status'); if(s) s.textContent=`NEXT ROUND IN ${Math.max(0,remaining/1000).toFixed(1)}s`; if(remaining<=0){ clearInterval(bar); startFlying(); } },100); }
+function startFlying(){ GAME.state='flying'; GAME.crashPoint=makeCrashPoint(); GAME.startTime=performance.now(); const st=document.getElementById('status'); if(st) st.textContent=''; renderAvPanels(); startEngine(); requestAnimationFrame(tick); }
+function growth(t){ return Math.pow(Math.E, 0.17*t); }
+function tick(now){ if(GAME.state!=='flying') return; const t=(now-GAME.startTime)/1000; GAME.mult=Math.max(1,growth(t)); updateEnginePitch(GAME.mult); if(GAME.mult>=GAME.crashPoint){ GAME.mult=GAME.crashPoint; drawCurve(GAME.mult); const num=document.getElementById('multNum'); if(num) num.textContent=GAME.mult.toFixed(2)+'x'; doCrash(); return; } avSlots.forEach((s,i)=>{ if(s.placed && !s.cashedOut && s.auto && GAME.mult>=s.autoTarget) cashOut(i); else updateAvPanelValue(i); }); const num=document.getElementById('multNum'); if(num) num.textContent=GAME.mult.toFixed(2)+'x'; drawCurve(GAME.mult); requestAnimationFrame(tick); }
+function doCrash(){ GAME.state='crashed'; stopEngine(); if(isAviatorActive()) playCrashSound(); pushHistory(GAME.crashPoint); const ov=document.getElementById('multOverlay'); const num=document.getElementById('multNum'); if(ov) ov.classList.add('crashedState'); if(num) num.classList.add('crashed'); const st=document.getElementById('status'); if(st) st.textContent='FLEW AWAY'; avSlots.forEach(s=>{ if(s.placed && !s.cashedOut) recordLoss(); }); const flash=document.getElementById('flash'); if(flash){ flash.style.transition='none'; flash.style.opacity='0.35'; requestAnimationFrame(()=>{ flash.style.transition='opacity .6s'; flash.style.opacity='0'; }); } setTimeout(()=>{ avSlots.forEach(s=>{ s.placed=false; s.cashedOut=false; s.cashoutAt=null; }); startWaiting(); }, CRASHED_MS); }
+function drawCurve(mult){ if(!cv.clientWidth) return; const w=cv.clientWidth, h=cv.clientHeight; if(!w||!h) return; ctx.clearRect(0,0,w,h); ctx.save(); ctx.globalAlpha=0.06; ctx.strokeStyle='#fff'; const cx=w*0.08, cy=h*0.95; for(let a=0;a<10;a++){ ctx.beginPath(); ctx.moveTo(cx,cy); const ang=-Math.PI/2+(a-4.5)*0.12; ctx.lineTo(cx+Math.cos(ang)*Math.max(w,h)*1.4, cy+Math.sin(ang)*Math.max(w,h)*1.4); ctx.stroke(); } ctx.restore(); const padL=w*0.06,padB=h*0.08,padT=h*0.10,padR=w*0.06; const plotW=w-padL-padR, plotH=h-padT-padB; const maxT=Math.log(Math.max(mult,1.01))/0.17; const viewT=Math.max(maxT*1.05,1); const viewMult=Math.max(mult*1.15,2); function pt(t){ const m=growth(t); const x=padL+(t/viewT)*plotW; const y=h-padB-(Math.min(m,viewMult)-1)/(viewMult-1)*plotH; return [x,y]; } ctx.beginPath(); const steps=60; ctx.moveTo(padL,h-padB); let lastX=padL,lastY=h-padB; for(let i=0;i<=steps;i++){ const t=(i/steps)*maxT; const [x,y]=pt(t); ctx.lineTo(x,y); lastX=x; lastY=y; } ctx.lineTo(lastX,h-padB); ctx.closePath(); const grad=ctx.createLinearGradient(0,padT,0,h-padB); grad.addColorStop(0,'rgba(230,57,70,0.85)'); grad.addColorStop(1,'rgba(230,57,70,0.05)'); ctx.fillStyle=grad; ctx.fill(); ctx.beginPath(); ctx.moveTo(padL,h-padB); for(let i=0;i<=steps;i++){ const t=(i/steps)*maxT; const [x,y]=pt(t); ctx.lineTo(x,y); } ctx.strokeStyle='#ff3b4e'; ctx.lineWidth=3; ctx.stroke(); ctx.save(); ctx.translate(lastX,lastY); const dt=0.001; const [px,py]=pt(Math.max(0,maxT-dt)); const angle=Math.atan2(lastY-py,lastX-px); ctx.rotate(angle); ctx.font='22px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('🚀', 0, 0); ctx.restore(); }
+renderAvPanels(); startWaiting();
 
 /* ================================= WHEEL (2nd part)================================= */
 
